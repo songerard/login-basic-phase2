@@ -58,6 +58,13 @@ router.get('/welcome', (req, res) => {
   }
 })
 
+// get logout
+router.get('/logout', (req, res) => {
+  res.cookie('session_id', '')
+  res.cookie('session_dateTimeStamp', '')
+  res.redirect('/')
+})
+
 // Generate Session Id
 function generateSessionId() {
   const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
