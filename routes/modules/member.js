@@ -16,12 +16,15 @@ router.post('/login', (req, res) => {
   const email = req.body.email
   const password = req.body.password
   const session_id = generateSessionId()
+  const session_dateTimeStamp = Date.now()
   Users.find({ email, password })
     .then(result => {
       if (result.length) {
         result[0].session_id = session_id
+        result[0].session_dateTimeStamp = session_dateTimeStamp
         result[0].save()
         res.cookie('session_id', session_id)
+        res.cookie('session_dateTimeStamp', session_dateTimeStamp)
         res.redirect('/member/welcome')
       } else {
         const loginFail = true
@@ -34,7 +37,10 @@ router.post('/login', (req, res) => {
 // get welcome page
 router.get('/welcome', (req, res) => {
   const session_id = req.cookies.session_id
-  if (!session_id) {
+  const session_dateTimeStamp = req.cookies.session_dateTimeStamp
+  const now = Date.now()
+  const cookieExpired = (now - session_dateTimeStamp >= 5 * 60 * 1000) ? true : false
+  if (!session_id || cookieExpired) {
     const loginFail = true
     res.render('index', { loginFail })
   } else {

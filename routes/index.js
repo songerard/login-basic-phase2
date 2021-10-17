@@ -3,11 +3,11 @@ const express = require('express')
 const router = express.Router()
 
 // require route modules
-const login = require('./modules/login')
+const home = require('./modules/home')
 const member = require('./modules/member')
 
 // get login page
-router.use('/', login)
+router.use('/', home)
 router.use('/member', member)
 
 // export router

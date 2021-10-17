@@ -15,7 +15,10 @@ const userSchema = new Schema({
     required: true
   },
   session_id: {
-    type: String,
+    type: String
+  },
+  session_dateTimeStamp: {
+    type: Date
   }
 })
 
