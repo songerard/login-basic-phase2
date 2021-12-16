@@ -34,7 +34,7 @@ const users = [
 ]
 
 // require mongoose config
-require('./config/mongoose')
+const db = require('../../config/mongoose')
 
 // add seeds
 db.once('open', () => {
